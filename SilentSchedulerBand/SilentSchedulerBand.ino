@@ -3,7 +3,7 @@
 #include <LiquidCrystal.h>
 
 // Setup LCD: RS, E, D4, D5, D6, D7
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+LiquidCrystal lcd(12, 8, 5, 4, 3, 2);
 
 // RTC object
 RTC_DS3231 rtc;
@@ -55,13 +55,33 @@ void loop() {
   if (now.second() < 10) lcd.print('0');
   lcd.print(now.second());
 
-  if (now.hour() == 14 && now.minute() == 2) {
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Drink Water");
-  }
+  // if (now.hour() == 14 && now.minute() == 2) {
+  //   lcd.clear();
+  //   lcd.setCursor(0, 0);
+  //   lcd.print("Drink Water");
+  // }
 
+  // // RGB Color Cycle (1s per color)
+  // analogWrite(9, 255);  // Red
+  // analogWrite(10, 0);
+  // analogWrite(11, 0);
+  // delay(1000);
 
-  delay(1000); // Update every second
+  // analogWrite(9, 0);
+  // analogWrite(10, 255); // Green
+  // analogWrite(11, 0);
+  // delay(1000);
+
+  // analogWrite(9, 0);
+  // analogWrite(10, 0);
+  // analogWrite(11, 255); // Blue
+  // delay(1000);
+
+  // analogWrite(9, 128);  // Purple
+  // analogWrite(10, 0);
+  // analogWrite(11, 128);
+  // delay(1000);
+
+  delay(1000);
 }
 
