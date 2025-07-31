@@ -8,6 +8,15 @@ LiquidCrystal lcd(12, 8, 5, 4, 3, 2);
 // RTC object
 RTC_DS3231 rtc;
 
+// RGB LED Pins
+const int redPin = 9;
+const int greenPin = 10;
+const int bluePin = 11;
+
+// Motor pin (connected through L293D Input 1)
+const int motorPin = 7;
+
+
 void setup() {
   // Start Serial Monitor
   Serial.begin(9600);
@@ -27,7 +36,29 @@ void setup() {
     lcd.setCursor(0, 1);
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   }
+
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+  pinMode(motorPin, OUTPUT);
 }
+
+void setColor(bool redOn, bool greenOn, bool blueOn) {
+  digitalWrite(redPin, redOn);
+  digitalWrite(greenPin, greenOn);
+  digitalWrite(bluePin, blueOn);
+}
+
+void buzzPattern1() {
+  digitalWrite(motorPin, HIGH);
+  delay(200);
+  digitalWrite(motorPin, LOW);
+  delay(150);
+  digitalWrite(motorPin, HIGH);
+  delay(200);
+  digitalWrite(motorPin, LOW);
+}
+
 
 void loop() {
   DateTime now = rtc.now();
@@ -55,6 +86,7 @@ void loop() {
   if (now.second() < 10) lcd.print('0');
   lcd.print(now.second());
 
+
   // if (now.hour() == 14 && now.minute() == 2) {
   //   lcd.clear();
   //   lcd.setCursor(0, 0);
@@ -81,6 +113,18 @@ void loop() {
   // analogWrite(10, 0);
   // analogWrite(11, 128);
   // delay(1000);
+
+  // === Task Alert: Drink Water at 14:30:00 ===
+  if (now.hour() == 20 && now.minute() == 41 && now.second() == 20) {
+    lcd.setCursor(0, 1);
+    lcd.print("Drink Water     ");
+    setColor(0, 0, 1); // Blue
+    buzzPattern1();
+  } else {
+    lcd.setCursor(0, 1);
+    lcd.print("                "); // clear message
+    setColor(0, 0, 0); // turn off LED
+  }
 
   delay(1000);
 }
