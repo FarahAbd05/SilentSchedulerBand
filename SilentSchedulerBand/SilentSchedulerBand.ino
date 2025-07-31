@@ -108,7 +108,7 @@ void loop() {
   // analogWrite(11, 128);
   // delay(1000);
 
-  // === Task Alert: Drink Water at 14:30:00 ===
+  // Task Alert: Drink Water at specified time
   if (now.hour() == 23 && now.minute() == 13 && now.second() == 30) {
     lcd.setCursor(0, 1);
     lcd.print("Drink Water     ");
