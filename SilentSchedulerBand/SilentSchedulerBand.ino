@@ -87,12 +87,6 @@ void loop() {
   lcd.print(now.second());
 
 
-  // if (now.hour() == 14 && now.minute() == 2) {
-  //   lcd.clear();
-  //   lcd.setCursor(0, 0);
-  //   lcd.print("Drink Water");
-  // }
-
   // // RGB Color Cycle (1s per color)
   // analogWrite(9, 255);  // Red
   // analogWrite(10, 0);
@@ -115,7 +109,7 @@ void loop() {
   // delay(1000);
 
   // === Task Alert: Drink Water at 14:30:00 ===
-  if (now.hour() == 20 && now.minute() == 41 && now.second() == 20) {
+  if (now.hour() == 23 && now.minute() == 13 && now.second() == 30) {
     lcd.setCursor(0, 1);
     lcd.print("Drink Water     ");
     setColor(0, 0, 1); // Blue
