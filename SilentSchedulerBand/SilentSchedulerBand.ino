@@ -35,36 +35,30 @@ struct Task {
 
 //Define multiple tasks here
 Task tasks[] = {
-  {23, 9, 25, "Drink Water", 0, 0, 1, 1},     // Blue + buzz pattern 1
-  {23, 7, 30, "Check Insulin", 1, 1, 0, 2},   // Yellow (red+green) + buzz pattern 2
-  {23, 8, 0, "Urgent Med", 1, 0, 0, 1}      // Red + buzz pattern 1
+  // Morning Hygiene + Health
+  {7, 30, 0, "Brush Teeth",      1, 1, 1, 1},   // White,   Buzz 1
+  {7, 45, 0, "Check Insulin",    0, 1, 0, 2},   // Green,   Buzz 2
+  {8, 0, 0, "Eat Breakfast",     0, 0, 1, 1},   // blue,    Buzz 1
+  {8, 15, 0, "Take Meds",        1, 0, 0, 2},   // Red,     Buzz 2
+  {9, 30, 0, "Take Shower",      0, 0, 1, 1},   // blue,    Buzz 1
+
+  // Midday Movement + Health
+  {11, 0, 0, "Drink Water",      0, 0, 1, 1},   // blue     Buzz 1
+  {12, 0, 0, "Eat Lunch",        0, 0, 1, 1},   // blue,    Buzz 1
+  {13, 30, 0, "Stretch Body",    0, 0, 1, 1},   // blue,    Buzz 1
+  {14, 30, 0, "Check Insulin",   0, 1, 0, 2},   // Green,   Buzz 2
+
+  // Evening Routine + Social
+  {15, 30, 0, "Drink Water",     0, 0, 1, 1},   // blue,    Buzz 1
+  {17, 30, 0, "Take Meds",       1, 0, 0, 2},   // Red,     Buzz 2
+  {18, 30, 0, "Eat Dinner",      0, 0, 1, 1},   // blue,    Buzz 1
+  {20, 0, 0, "Call Family",      0, 1, 0, 2},   // Green,   Buzz 2
+  {21, 30, 0, "Brush Teeth",     1, 1, 1, 1},   // White,   Buzz 1
+
+  // Night Health Check
+  {22, 0, 0, "Check Insulin",    0, 1, 0, 2},   // Green,   Buzz 2
+  {22, 15, 0, "Take Meds",       1, 0, 0, 2}    // Red,     Buzz 2
 };
-
-// Task tasks[] = {
-//   // Morning Hygiene + Health
-//   {7, 30, 0, "Brush Teeth",      1, 1, 1, 1},   // White (R+G+B), Buzz 1: 1 Long
-//   {7, 45, 0, "Check Insulin",    1, 1, 0, 2},   // Yellow (R+G),  Buzz 2: 2 Medium
-//   {8, 0, 0, "Eat Breakfast",     1, 1, 0, 1},   // Yellow (R+G),  Buzz 3: 2 Short
-//   {8, 15, 0, "Take Meds",        1, 0, 0, 2},   // Red,          Buzz 4: 3 Fast pulses
-//   {9, 30, 0, "Take Shower",      0, 1, 1, 1},   // Cyan (G+B),   Buzz 5: 1 Short, 1 Long
-
-//   // Midday Movement + Health
-//   {11, 0, 0, "Drink Water",      0, 0, 1, 1},   // Blue,         Buzz 6: 1 Medium
-//   {12, 0, 0, "Eat Lunch",        1, 1, 0, 1},   // Yellow,       Buzz 3: 2 Short
-//   {13, 30, 0, "Stretch Body",    1, 0, 1, 1},   // Purple (R+B), Buzz 7: 3 Short
-//   {14, 30, 0, "Check Insulin",   1, 1, 0, 2},   // Yellow,       Buzz 2: 2 Medium
-
-//   // Evening Routine + Social
-//   {15, 30, 0, "Drink Water",     0, 0, 1, 1},   // Blue,         Buzz 6: 1 Medium
-//   {17, 30, 0, "Take Meds",       1, 0, 0, 2},   // Red,          Buzz 4: 3 Fast pulses
-//   {18, 30, 0, "Eat Dinner",      0, 1, 0, 1},   // Green,        Buzz 3: 2 Short
-//   {20, 0, 0, "Call Family",      1, 0, 0, 1},   // Red,          Buzz 8: 3 Medium
-//   {21, 30, 0, "Brush Teeth",     1, 1, 1, 1},   // White,        Buzz 1: 1 Long
-
-//   // Night Health Check
-//   {22, 0, 0, "Check Insulin",    1, 1, 0, 2},   // Yellow,       Buzz 2: 2 Medium
-//   {22, 15, 0, "Take Meds",       1, 0, 0, 2}    // Red,          Buzz 4: 3 Fast pulses
-// };
 
 const int numTasks = sizeof(tasks) / sizeof(tasks[0]);
 
@@ -88,8 +82,8 @@ void setup() {
   }
 
   if (rtc.lostPower()) {
-    Serial.println("RTC lost power, setting time to compile time.");
-    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+    lcd.setCursor(0, 1);
+    lcd.print("RTC lost power");
   }
 
   pinMode(redPin, OUTPUT);
@@ -152,7 +146,7 @@ void loop() {
   // Check if dismiss button pressed
   int dismissState = digitalRead(dismissPin);
   if (dismissState == HIGH && alertActive) {
-    // User pressed dismiss button; stop alert
+    // User pressed dismiss button, so alert stops 
     alertActive = false;
     currentTaskIndex = -1;
     lcd.setCursor(0, 1);
@@ -204,5 +198,6 @@ void loop() {
     digitalWrite(motorPin, LOW);
   }
 
-  delay(200);  // small delay to avoid bouncing and for timing smoothness
+  delay(1000);  // small delay for timing smoothness
 }
+
