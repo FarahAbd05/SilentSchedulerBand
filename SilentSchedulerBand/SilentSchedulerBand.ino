@@ -159,7 +159,9 @@ void loop() {
   // If no alert active, check for new tasks to trigger
   if (!alertActive) {
     for (int i = 0; i < numTasks; i++) {
-      if (now.hour() == tasks[i].hour && now.minute() == tasks[i].minute && now.second() == tasks[i].second) {
+      if (now.hour() == tasks[i].hour && 
+          now.minute() == tasks[i].minute && 
+          now.second() == tasks[i].second) {
         // Trigger task alert
         alertActive = true;
         currentTaskIndex = i;
