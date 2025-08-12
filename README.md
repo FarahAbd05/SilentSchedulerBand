@@ -1,6 +1,6 @@
 # Silent Scheduler Band
 
-The **Silent Scheduler Band** is a wearable task reminder system designed to assist individuals with disabilities, particularly those who are deaf, hard of hearing, neurodivergent, or experience memory or attention challenges.
+The **Silent Scheduler Band** is a task reminder system designed to assist individuals with disabilities, particularly those who are deaf, neurodivergent, or experience memory or attention challenges.
 
 Instead of using sound-based alerts, this device delivers **multisensory cues** through:
 
